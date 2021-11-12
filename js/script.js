@@ -28,6 +28,20 @@ function mensagensIniciais(resposta){
         caixaMensagens.innerHTML += (formatarMensagem(messageList[i]));
     }
 }
+function mostrarMensagensNovas(){
+    const listaMensagens = axios.get("https://mock-api.driven.com.br/api/v4/uol/messages");
+    listaMensagens.then(mensagensNovas);
+}
+function mensagensNovas(resposta){
+    const messageList = resposta.data;
+    const ultimaMensagemServidor = formatarMensagem(messageList[messageList.length - 1]);
+    let caixaMensagens = document.querySelector(".caixa-mensagens");
+    const ultimaMensagemCliente = caixaMensagens.lastElementChild.outerHTML;  
+    if (ultimaMensagemCliente !== ultimaMensagemServidor){
+        caixaMensagens.innerHTML += ultimaMensagemServidor;
+        caixaMensagens.lastElementChild.scrollIntoView();
+    }
+}
 function formatarMensagem(mensagem){
     const tipoMensagem = mensagem.type;
     
@@ -64,7 +78,7 @@ function formatarMensagem(mensagem){
             </div>`
             break;
         default:
-            formatMensagem = `<div class="message reservada" data-identifier="message"
+            formatMensagem = `<div class="message publica" data-identifier="message"
             <span class="hora-envio">(00:00:00)</span>
             <span class="user">ERROR</span>
             para
