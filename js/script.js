@@ -1,18 +1,28 @@
+let usuarioAtivo = ""; 
 function horaAtual(){
     const today = new Date();
     const hora = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     return hora;
 }
 function login(){
-    const user_raw = prompt("Insira seu nome de usuário");
-    const requisicao = axios.post(
-        "https://mock-api.driven.com.br/api/v4/uol/participants",
-        {
-          name: user_raw
+    usuarioAtivo = prompt("Insira seu nome de usuário");
+    const loginUser = axios.post(
+    "https://mock-api.driven.com.br/api/v4/uol/participants",
+    {
+        name: usuarioAtivo
         }
       );
-    // requisicao.then(teste);
-    // requisicao.catch(entradaInvalida);
+    loginUser.then(console.log("entrei"));
+    setInterval(function(){
+        axios.post("https://mock-api.driven.com.br/api/v4/uol/status",
+        {
+            name: usuarioAtivo
+        }
+        );}, 50000);
+    loginUser.catch(function(){
+        alert("Usuário Inválido ou nome já utilizado, por favor tente novamente");
+        login();
+    });
 }
 function entradaInvalida(){
     alert("Nome inválido, por favor tente novamente");
@@ -26,6 +36,7 @@ function mensagensIniciais(resposta){
     let caixaMensagens = document.querySelector(".caixa-mensagens");
     for (let i = 0; messageList.length; i++){
         caixaMensagens.innerHTML += (formatarMensagem(messageList[i]));
+        caixaMensagens.lastElementChild.scrollIntoView();
     }
 }
 function mostrarMensagensNovas(){
@@ -40,7 +51,9 @@ function mensagensNovas(resposta){
     if (ultimaMensagemCliente !== ultimaMensagemServidor){
         caixaMensagens.innerHTML += ultimaMensagemServidor;
         caixaMensagens.lastElementChild.scrollIntoView();
+        console.log("Encontrada");
     }
+    console.log("Buscando mensagem nova");
 }
 function formatarMensagem(mensagem){
     const tipoMensagem = mensagem.type;
@@ -87,4 +100,17 @@ function formatarMensagem(mensagem){
             </div>`
     }
     return formatMensagem;
+}
+function formatarEnvio(to, text, type){
+    let resposta = {from: usuarioAtivo, to: to, text: text, type: type};
+    return resposta
+}
+function enviarMensagem(){
+    const mensagem = document.querySelector(".caixa-envio").value;
+    let objetoMensagem = formatarEnvio("Todos", mensagem, "message");
+    console.log(objetoMensagem);
+    const mensagemUser = axios.post("https://mock-api.driven.com.br/api/v4/uol/messages",
+    objetoMensagem);
+    mensagemUser.then(console.log(mensagemUser));
+    document.querySelector(".caixa-envio").value = "";
 }

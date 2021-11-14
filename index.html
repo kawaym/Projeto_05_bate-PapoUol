@@ -23,10 +23,12 @@
         
     </main>
     <footer class="rodape">
-        <input class="caixa-envio" type="text" placeholder="Escreva aqui..."/>
-        <button>
-            <ion-icon name="paper-plane-outline"></ion-icon>
-        </button>
+        <form class="envio-mensagem" onsubmit="return false">
+            <input class="caixa-envio" type="text" placeholder="Escreva aqui..."/>
+            <button class="enviar-mensagem" data-identifier="send-message" onclick="enviarMensagem()">
+                <ion-icon name="paper-plane-outline"></ion-icon>
+            </button>
+        </form>
     </footer>
 
 
@@ -36,6 +38,7 @@
     <script src="js/script.js"></script>
     <script>
         mostrarMensagensIniciais();
+        login();
         setInterval(mostrarMensagensNovas, 200);
     </script>
 </body>
