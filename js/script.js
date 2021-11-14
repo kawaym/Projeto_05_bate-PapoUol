@@ -18,7 +18,7 @@ function login(){
         {
             name: usuarioAtivo
         }
-        );}, 50000);
+        );}, 5000);
     loginUser.catch(function(){
         alert("Usuário Inválido ou nome já utilizado, por favor tente novamente");
         login();
@@ -35,8 +35,10 @@ function mensagensIniciais(resposta){
     const messageList = resposta.data;   
     let caixaMensagens = document.querySelector(".caixa-mensagens");
     for (let i = 0; messageList.length; i++){
-        caixaMensagens.innerHTML += (formatarMensagem(messageList[i]));
-        caixaMensagens.lastElementChild.scrollIntoView();
+        if((messageList[i].type === "private_message" && messageList[i].to === usuarioAtivo) || messageList[i].to === "Todos"){
+            caixaMensagens.innerHTML += (formatarMensagem(messageList[i]));
+            caixaMensagens.lastElementChild.scrollIntoView();
+        }
     }
 }
 function mostrarMensagensNovas(){
