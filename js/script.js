@@ -34,8 +34,9 @@ function mostrarMensagensIniciais(){
 function mensagensIniciais(resposta){
     const messageList = resposta.data;   
     let caixaMensagens = document.querySelector(".caixa-mensagens");
+    caixaMensagens.innerHTML = "";
     for (let i = 0; messageList.length; i++){
-        if((messageList[i].type === "private_message" && messageList[i].to === usuarioAtivo) || messageList[i].to === "Todos"){
+        if((messageList[i].type === "private_message" && messageList[i].to === usuarioAtivo) || messageList[i].to === "Todos" || messageList[i].from === usuarioAtivo){
             caixaMensagens.innerHTML += (formatarMensagem(messageList[i]));
             caixaMensagens.lastElementChild.scrollIntoView();
         }
@@ -47,11 +48,12 @@ function mostrarMensagensNovas(){
 }
 function mensagensNovas(resposta){
     const messageList = resposta.data;
-    const ultimaMensagemServidor = formatarMensagem(messageList[messageList.length - 1]);
+    const ultimaMensagemServidorObj = messageList[messageList.length - 1];
+    const ultimaMensagemServidor = formatarMensagem(ultimaMensagemServidorObj);
     let caixaMensagens = document.querySelector(".caixa-mensagens");
     const ultimaMensagemCliente = caixaMensagens.lastElementChild.outerHTML;  
     if (ultimaMensagemCliente !== ultimaMensagemServidor){
-        if((messageList[messageList.length - 1].type === "private_message" && messageList[messageList.length - 1].to === usuarioAtivo) || messageList[messageList.length - 1].to === "Todos"){    
+        if((ultimaMensagemServidorObj.type === "private_message" && ultimaMensagemServidorObj.to === usuarioAtivo) || ultimaMensagemServidorObj.to === "Todos" || ultimaMensagemServidorObj.from === usuarioAtivo){    
             caixaMensagens.innerHTML += ultimaMensagemServidor;
             caixaMensagens.lastElementChild.scrollIntoView();
         };
@@ -109,7 +111,7 @@ function formatarEnvio(to, text, type){
 }
 function enviarMensagem(){
     const mensagem = document.querySelector(".caixa-envio").value;
-    let objetoMensagem = formatarEnvio("Todos", mensagem, "private_message");
+    let objetoMensagem = formatarEnvio("Todos", mensagem, "message");
     const mensagemUser = axios.post("https://mock-api.driven.com.br/api/v4/uol/messages",
     objetoMensagem);
     mensagemUser.then();

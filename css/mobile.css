@@ -92,3 +92,6 @@ body{
     text-align: left;
     color: black;
 }
+.caixa-envio::placeholder{
+    color: grey;
+}
