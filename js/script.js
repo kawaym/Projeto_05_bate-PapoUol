@@ -12,7 +12,7 @@ function login(){
         name: usuarioAtivo
         }
       );
-    loginUser.then(console.log("entrei"));
+    loginUser.then();
     setInterval(function(){
         axios.post("https://mock-api.driven.com.br/api/v4/uol/status",
         {
@@ -51,11 +51,11 @@ function mensagensNovas(resposta){
     let caixaMensagens = document.querySelector(".caixa-mensagens");
     const ultimaMensagemCliente = caixaMensagens.lastElementChild.outerHTML;  
     if (ultimaMensagemCliente !== ultimaMensagemServidor){
-        caixaMensagens.innerHTML += ultimaMensagemServidor;
-        caixaMensagens.lastElementChild.scrollIntoView();
-        console.log("Encontrada");
-    }
-    console.log("Buscando mensagem nova");
+        if((messageList[messageList.length - 1].type === "private_message" && messageList[messageList.length - 1].to === usuarioAtivo) || messageList[messageList.length - 1].to === "Todos"){    
+            caixaMensagens.innerHTML += ultimaMensagemServidor;
+            caixaMensagens.lastElementChild.scrollIntoView();
+        };
+    };
 }
 function formatarMensagem(mensagem){
     const tipoMensagem = mensagem.type;
@@ -84,7 +84,7 @@ function formatarMensagem(mensagem){
             </div>`
             break;
         case 'private_message':
-            formatMensagem = `<div class="message reservada" data-identifier="message"
+            formatMensagem = `<div class="message reservada" data-identifier="message">
             <span class="hora-envio">(${horaMensagem})</span>
             <span class="user"> ${remMensagem}</span>
             reservadamente para
@@ -93,7 +93,7 @@ function formatarMensagem(mensagem){
             </div>`
             break;
         default:
-            formatMensagem = `<div class="message publica" data-identifier="message"
+            formatMensagem = `<div class="message publica" data-identifier="message">
             <span class="hora-envio">(00:00:00)</span>
             <span class="user">ERROR</span>
             para
@@ -109,10 +109,9 @@ function formatarEnvio(to, text, type){
 }
 function enviarMensagem(){
     const mensagem = document.querySelector(".caixa-envio").value;
-    let objetoMensagem = formatarEnvio("Todos", mensagem, "message");
-    console.log(objetoMensagem);
+    let objetoMensagem = formatarEnvio("Todos", mensagem, "private_message");
     const mensagemUser = axios.post("https://mock-api.driven.com.br/api/v4/uol/messages",
     objetoMensagem);
-    mensagemUser.then(console.log(mensagemUser));
+    mensagemUser.then();
     document.querySelector(".caixa-envio").value = "";
-}
+}   
