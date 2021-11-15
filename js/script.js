@@ -115,5 +115,34 @@ function enviarMensagem(){
     const mensagemUser = axios.post("https://mock-api.driven.com.br/api/v4/uol/messages",
     objetoMensagem);
     mensagemUser.then();
+    mensagemUser.catch(window.location.reload);
     document.querySelector(".caixa-envio").value = "";
 }   
+function desativarOverlay(overlay){
+    overlay.style.display = "none";
+    const menu = document.querySelector(".menu-participantes");
+    menu.style.display = "none";
+}
+function mostrarMenuParticipantes(){
+    const menu = document.querySelector(".menu-participantes");
+    const overlay = document.querySelector(".overlay");
+    overlay.style.display = "flex";
+    menu.style.display = "flex";
+}
+function mostrarListaParticipantes(){
+    const listaParticipantes = axios.get("https://mock-api.driven.com.br/api/v4/uol/participants");
+    listaParticipantes.then(participantesOnline);
+}
+function participantesOnline(resposta){
+    const participantList = resposta.data;
+    let caixaParticipantes = document.querySelector(".lista-participantes");
+    console.log(caixaParticipantes)
+    caixaParticipantes.innerHTML = `<button class="participante" data-identifier="participant">Todos</button>`;
+    for (let i = 0; participantList.length; i++){
+        if(participantList[i].name !== usuarioAtivo){
+            caixaParticipantes.innerHTML += `<button class="participante" data-identifier="participant"> ${participantList[i].name}</button>`;
+    
+        }
+
+    }
+}

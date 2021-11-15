@@ -15,9 +15,35 @@
     <title>Bate-papo UOL</title>
 </head>
 <body>
+    <div class="overlay" onclick="desativarOverlay(this)"></div>
+    <div class="menu-participantes">
+        <span>
+            Escolha um contato para enviar mensagem:
+        </span>
+        <div class="lista-participantes">
+            <button class="participante" data-identifier="participant">Todos</button>
+        </div>
+        <span>
+            Escolha a visibilidade:
+        </span>
+        <div class="privacidade-mensagem">
+            <button class="botao-privacidade privacidade-publica">
+                <ion-icon name="lock-open"></ion-icon>
+                Público
+                <ion-icon name="checkmark" class="check"></ion-icon>
+            </button>
+            <button class="botao-privacidade privacidade-reservada">
+                <ion-icon name="lock-closed"></ion-icon>
+                Reservadamente
+                <ion-icon name="checkmark" class="check desativado"></ion-icon>
+            </button>
+        </div>
+    </div>
     <header class="cabecalho">
         <img src="assets/logo_1.png"/>
-        <ion-icon name="people"></ion-icon>
+        <button class="botao-participantes" onclick="mostrarMenuParticipantes();">
+            <ion-icon name="people"></ion-icon>
+        </button>
     </header>
     <main class="caixa-mensagens" data-identifier="message">
         
@@ -40,6 +66,8 @@
         mostrarMensagensIniciais();
         login();
         setInterval(mostrarMensagensNovas, 150);
+        mostrarListaParticipantes();
+        setInterval(mostrarListaParticipantes, 10000);
     </script>
 </body>
 </html>
