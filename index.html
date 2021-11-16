@@ -15,13 +15,19 @@
     <title>Bate-papo UOL</title>
 </head>
 <body>
+    <div class="tela-login">
+        <form class="entrada-usuario" onsubmit="return false">
+            <input class="caixa-envio-user" type="text" placeholder="Insira um nome de usuário" data-identifier="enter-name"/>
+            <button class="enviar-user" data-identifier="start" onclick="login()">Enviar</button>
+        </form>
+    </div>
     <div class="overlay" onclick="desativarOverlay(this)"></div>
     <div class="menu-participantes">
         <span>
             Escolha um contato para enviar mensagem:
         </span>
         <div class="lista-participantes">
-            <button class="participante selecionado" data-identifier="participant" onclick="selecionarParticipante(this)">Todos<ion-icon name="checkmark" class="check"></ion-icon></button>
+            <button class="participante selecionado todos" data-identifier="participant" onclick="selecionarParticipante(this)">Todos<ion-icon name="checkmark" class="check"></ion-icon></button>
         </div>
         <span>
             Escolha a visibilidade:
@@ -50,7 +56,10 @@
     </main>
     <footer class="rodape">
         <form class="envio-mensagem" onsubmit="return false">
-            <input class="caixa-envio" type="text" placeholder="Escreva aqui..."/>
+            <div class="textinho">
+                <input class="caixa-envio" type="text" placeholder="Escreva aqui..."/>
+                <span class="info-mensagem">Enviando para Todos (Público)</span>
+            </div>
             <button class="enviar-mensagem" data-identifier="send-message" onclick="enviarMensagem()">
                 <ion-icon name="paper-plane-outline"></ion-icon>
             </button>
@@ -64,10 +73,9 @@
     <script src="js/script.js"></script>
     <script>
         mostrarMensagensIniciais();
-        login();
         setInterval(mostrarMensagensNovas, 150);
         mostrarListaParticipantes();
-        // setInterval(mostrarListaParticipantes, 10000);
+        setInterval(mostrarListaParticipantes, 10000);
     </script>
 </body>
 </html>

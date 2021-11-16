@@ -1,20 +1,25 @@
 let usuarioAtivo = ""; 
 let usuarioDestino = "Todos";
 let privacidade = "message";
+let info_msg = document.querySelector(".info-mensagem");
+let participantList = [];
 function horaAtual(){
     const today = new Date();
     const hora = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     return hora;
 }
 function login(){
-    usuarioAtivo = prompt("Insira seu nome de usuário");
+    const tela_login = document.querySelector(".tela-login");
+    const user = document.querySelector(".caixa-envio-user").value;
+    usuarioAtivo = user;
     const loginUser = axios.post(
     "https://mock-api.driven.com.br/api/v4/uol/participants",
     {
         name: usuarioAtivo
         }
       );
-    loginUser.then();
+    loginUser.then(function(){tela_login.classList.add("desativado")});
+    
     setInterval(function(){
         axios.post("https://mock-api.driven.com.br/api/v4/uol/status",
         {
@@ -23,7 +28,8 @@ function login(){
         );}, 5000);
     loginUser.catch(function(){
         alert("Usuário Inválido ou nome já utilizado, por favor tente novamente");
-        login();
+        document.querySelector(".caixa-envio-user").value = "";
+        window.location.reload();
     });
 }
 function entradaInvalida(){
@@ -136,15 +142,25 @@ function mostrarListaParticipantes(){
     listaParticipantes.then(participantesOnline);
 }
 function participantesOnline(resposta){
-    const participantList = resposta.data;
+    participantList = resposta.data;
     let caixaParticipantes = document.querySelector(".lista-participantes");
-    caixaParticipantes.innerHTML = `<button class="participante selecionado" data-identifier="participant" onclick="selecionarParticipante(this)">Todos<ion-icon name="checkmark" class="check desativado"></ion-icon></button>`;
+    caixaParticipantes.innerHTML = `<button class="participante ${checarParticipante("Todos", usuarioDestino)} todos" data-identifier="participant" onclick="selecionarParticipante(this)">Todos<ion-icon name="checkmark" class="check"></ion-icon></button>`;
     for (let i = 0; participantList.length; i++){
         if(participantList[i].name !== usuarioAtivo){
-            caixaParticipantes.innerHTML += `<button class="participante" data-identifier="participant" onclick="selecionarParticipante(this)"> ${participantList[i].name}
-            <ion-icon name="checkmark" class="check desativado"></ion-icon></button>`;
+            caixaParticipantes.innerHTML += `<button class="participante ${checarParticipante(participantList[i].name, usuarioDestino)}"  data-identifier="participant" onclick="selecionarParticipante(this)"> ${participantList[i].name}
+            <ion-icon name="checkmark" class="check"></ion-icon></button>`;
         }
 
+    }
+}
+function checarParticipante(alvo, destino){
+    if (alvo === destino){
+        return "selecionado";
+    }
+    else if (alvo === "Todos" && !(participantList.some(e => e.name === destino))){ 
+        usuarioDestino = "Todos";
+        info_msg.innerHTML = `Enviando para ${usuarioDestino} (${(privacidade === "message") ? "Público" : "Reservadamente"})`
+        return "selecionado";
     }
 }
 function selecionarParticipante(destinatario){
@@ -156,7 +172,8 @@ function selecionarParticipante(destinatario){
         }
     }
     destinatario.classList.add("selecionado");
-    usuarioDestino = destinatario.innerHTML; 
+    usuarioDestino = destinatario.innerText; 
+    info_msg.innerHTML = `Enviando para ${usuarioDestino} (${(privacidade === "message") ? "Público" : "Reservadamente"})`
 }
 function selecionarPrivacidade(modo_envio){
     let privacidade_selecionado = document.querySelector(".botao-privacidade.selecionado");
@@ -173,4 +190,5 @@ function selecionarPrivacidade(modo_envio){
     else if (modo_envio.innerText === " Reservadamente"){
         privacidade = "private_message";
     }
+    info_msg.innerHTML = `Enviando para ${usuarioDestino} (${(privacidade === "message") ? "Público" : "Reservadamente"})`
 }
