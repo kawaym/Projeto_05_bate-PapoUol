@@ -144,10 +144,10 @@ function mostrarListaParticipantes(){
 function participantesOnline(resposta){
     participantList = resposta.data;
     let caixaParticipantes = document.querySelector(".lista-participantes");
-    caixaParticipantes.innerHTML = `<button class="participante ${checarParticipante("Todos", usuarioDestino)} todos" data-identifier="participant" onclick="selecionarParticipante(this)">Todos<ion-icon name="checkmark" class="check"></ion-icon></button>`;
-    for (let i = 0; participantList.length; i++){
+    caixaParticipantes.innerHTML = `<button class="participante ${checarParticipante("Todos", usuarioDestino)} todos" data-identifier="participant" onclick="selecionarParticipante(this)"><ion-icon name="people"></ion-icon>Todos<ion-icon name="checkmark" class="check"></ion-icon></button>`;
+    for (let i = 0; participantList.length - 1; i++){
         if(participantList[i].name !== usuarioAtivo){
-            caixaParticipantes.innerHTML += `<button class="participante ${checarParticipante(participantList[i].name, usuarioDestino)}"  data-identifier="participant" onclick="selecionarParticipante(this)"> ${participantList[i].name}
+            caixaParticipantes.innerHTML += `<button class="participante ${checarParticipante(participantList[i].name, usuarioDestino)}"  data-identifier="participant" onclick="selecionarParticipante(this)"><ion-icon name="person-circle"></ion-icon>${participantList[i].name}
             <ion-icon name="checkmark" class="check"></ion-icon></button>`;
         }
 
@@ -177,17 +177,16 @@ function selecionarParticipante(destinatario){
 }
 function selecionarPrivacidade(modo_envio){
     let privacidade_selecionado = document.querySelector(".botao-privacidade.selecionado");
-
     if (privacidade_selecionado !== null){
         if(privacidade_selecionado !== modo_envio){
             privacidade_selecionado.classList.remove("selecionado");
         }
     }
     modo_envio.classList.add("selecionado");
-    if (modo_envio.innerText === " Público"){
+    if (modo_envio.innerText === "Público"){
         privacidade = "message";
     }
-    else if (modo_envio.innerText === " Reservadamente"){
+    else if (modo_envio.innerText === "Reservadamente"){
         privacidade = "private_message";
     }
     info_msg.innerHTML = `Enviando para ${usuarioDestino} (${(privacidade === "message") ? "Público" : "Reservadamente"})`

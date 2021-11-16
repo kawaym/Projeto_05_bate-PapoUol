@@ -123,8 +123,9 @@ body{
 
     display: none;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     justify-content: flex-start;
+    overflow-y: scroll;
 
     position: fixed;
     right: 0;
@@ -139,7 +140,7 @@ body{
     font-size: 16px;
     line-height: 19px;
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     text-align: center;
 
     color: #000000;
@@ -148,6 +149,22 @@ body{
     display: flex;
 
     flex-direction: column;
+    align-items: flex-start;
+}
+.botao-privacidade{
+    width: 100%;
+    display: flex;
+
+
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 19px;
+display: flex;
+align-items: center;
+
+padding: 3px;
 }
 .privacidade-mensagem ion-icon{
     font-size: 22px;
@@ -159,6 +176,14 @@ body{
 }
 .participante{
     display: flex;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    padding: 3px;
 }
 .selecionado .check{
     display: flex;
@@ -177,9 +202,12 @@ body{
     height: 100%;
     background-color: white;
 
+    padding: 10%;
+
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 
     position: fixed;
     top: 0;
@@ -187,6 +215,39 @@ body{
     left: 0;
     right: 0;
     z-index: 3;
+}
+.entrada-usuario{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 95px;
+}
+.caixa-envio-user{
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid #D7D7D7;
+    border-radius: 4px;
+    text-align: center;
+}
+.caixa-envio-user::placeholder{
+    text-align: center;
+}
+.enviar-user{
+    width: 30%;
+    height: 45px;
+    margin-top: 20px;
+    background: #E7E7E7;
+    border-radius: 9px;
+}
+.info-mensagem{
+    font-family: Roboto;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 25px;
+}
+.lista-participantes ion-icon{
+    font-size: 25px;
 }
 .desativado{
     display: none;

@@ -16,6 +16,7 @@
 </head>
 <body>
     <div class="tela-login">
+        <img src="assets/logo_1.png"/>
         <form class="entrada-usuario" onsubmit="return false">
             <input class="caixa-envio-user" type="text" placeholder="Insira um nome de usuário" data-identifier="enter-name"/>
             <button class="enviar-user" data-identifier="start" onclick="login()">Enviar</button>
@@ -27,7 +28,7 @@
             Escolha um contato para enviar mensagem:
         </span>
         <div class="lista-participantes">
-            <button class="participante selecionado todos" data-identifier="participant" onclick="selecionarParticipante(this)">Todos<ion-icon name="checkmark" class="check"></ion-icon></button>
+            <button class="participante selecionado todos" data-identifier="participant" onclick="selecionarParticipante(this)"><ion-icon name="people"></ion-icon>Todos<ion-icon name="checkmark" class="check"></ion-icon></button>
         </div>
         <span>
             Escolha a visibilidade:
@@ -73,8 +74,9 @@
     <script src="js/script.js"></script>
     <script>
         mostrarMensagensIniciais();
-        setInterval(mostrarMensagensNovas, 150);
-        mostrarListaParticipantes();
+        // setInterval(mostrarMensagensIniciais, 3000);
+        setInterval(mostrarMensagensNovas, 100);
+       mostrarListaParticipantes();
         setInterval(mostrarListaParticipantes, 10000);
     </script>
 </body>
