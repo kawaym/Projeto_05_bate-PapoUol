@@ -1,4 +1,6 @@
 let usuarioAtivo = ""; 
+let usuarioDestino = "Todos";
+let privacidade = "message";
 function horaAtual(){
     const today = new Date();
     const hora = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -111,7 +113,7 @@ function formatarEnvio(to, text, type){
 }
 function enviarMensagem(){
     const mensagem = document.querySelector(".caixa-envio").value;
-    let objetoMensagem = formatarEnvio("Todos", mensagem, "message");
+    let objetoMensagem = formatarEnvio(usuarioDestino, mensagem, privacidade);
     const mensagemUser = axios.post("https://mock-api.driven.com.br/api/v4/uol/messages",
     objetoMensagem);
     mensagemUser.then();
@@ -136,13 +138,39 @@ function mostrarListaParticipantes(){
 function participantesOnline(resposta){
     const participantList = resposta.data;
     let caixaParticipantes = document.querySelector(".lista-participantes");
-    console.log(caixaParticipantes)
-    caixaParticipantes.innerHTML = `<button class="participante" data-identifier="participant">Todos</button>`;
+    caixaParticipantes.innerHTML = `<button class="participante selecionado" data-identifier="participant" onclick="selecionarParticipante(this)">Todos<ion-icon name="checkmark" class="check desativado"></ion-icon></button>`;
     for (let i = 0; participantList.length; i++){
         if(participantList[i].name !== usuarioAtivo){
-            caixaParticipantes.innerHTML += `<button class="participante" data-identifier="participant"> ${participantList[i].name}</button>`;
-    
+            caixaParticipantes.innerHTML += `<button class="participante" data-identifier="participant" onclick="selecionarParticipante(this)"> ${participantList[i].name}
+            <ion-icon name="checkmark" class="check desativado"></ion-icon></button>`;
         }
 
+    }
+}
+function selecionarParticipante(destinatario){
+    let participanteSelecionado = document.querySelector(".participante.selecionado");
+
+    if (participanteSelecionado !== null){
+        if (participanteSelecionado !== destinatario){
+            participanteSelecionado.classList.remove("selecionado");
+        }
+    }
+    destinatario.classList.add("selecionado");
+    usuarioDestino = destinatario.innerHTML; 
+}
+function selecionarPrivacidade(modo_envio){
+    let privacidade_selecionado = document.querySelector(".botao-privacidade.selecionado");
+
+    if (privacidade_selecionado !== null){
+        if(privacidade_selecionado !== modo_envio){
+            privacidade_selecionado.classList.remove("selecionado");
+        }
+    }
+    modo_envio.classList.add("selecionado");
+    if (modo_envio.innerText === " Público"){
+        privacidade = "message";
+    }
+    else if (modo_envio.innerText === " Reservadamente"){
+        privacidade = "private_message";
     }
 }

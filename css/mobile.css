@@ -155,9 +155,13 @@ body{
 .check{
     font-size: 22px;
     color: #28BB25;
-}
-.desativado{
     display: none;
+}
+.participante{
+    display: flex;
+}
+.selecionado .check{
+    display: flex;
 }
 .lista-participantes{
     display: flex;

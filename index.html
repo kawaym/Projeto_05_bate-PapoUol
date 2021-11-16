@@ -21,18 +21,18 @@
             Escolha um contato para enviar mensagem:
         </span>
         <div class="lista-participantes">
-            <button class="participante" data-identifier="participant">Todos</button>
+            <button class="participante selecionado" data-identifier="participant" onclick="selecionarParticipante(this)">Todos<ion-icon name="checkmark" class="check"></ion-icon></button>
         </div>
         <span>
             Escolha a visibilidade:
         </span>
         <div class="privacidade-mensagem">
-            <button class="botao-privacidade privacidade-publica">
+            <button class="botao-privacidade privacidade-publica selecionado" onclick="selecionarPrivacidade(this)">
                 <ion-icon name="lock-open"></ion-icon>
                 Público
                 <ion-icon name="checkmark" class="check"></ion-icon>
             </button>
-            <button class="botao-privacidade privacidade-reservada">
+            <button class="botao-privacidade privacidade-reservada" onclick="selecionarPrivacidade(this)">
                 <ion-icon name="lock-closed"></ion-icon>
                 Reservadamente
                 <ion-icon name="checkmark" class="check desativado"></ion-icon>
@@ -67,7 +67,7 @@
         login();
         setInterval(mostrarMensagensNovas, 150);
         mostrarListaParticipantes();
-        setInterval(mostrarListaParticipantes, 10000);
+        // setInterval(mostrarListaParticipantes, 10000);
     </script>
 </body>
 </html>
