@@ -40,10 +40,10 @@ function mostrarMensagensIniciais(){
     listaMensagens.then(mensagensIniciais);
 }
 function mensagensIniciais(resposta){
-    const messageList = resposta.data;   
+    let messageList = resposta.data; 
     let caixaMensagens = document.querySelector(".caixa-mensagens");
     caixaMensagens.innerHTML = "";
-    for (let i = 0; messageList.length; i++){
+    for (let i = 0; i < messageList.length; i++){
         if((messageList[i].type === "private_message" && messageList[i].to === usuarioAtivo) || messageList[i].to === "Todos" || messageList[i].from === usuarioAtivo){
             caixaMensagens.innerHTML += (formatarMensagem(messageList[i]));
             caixaMensagens.lastElementChild.scrollIntoView();
@@ -145,7 +145,7 @@ function participantesOnline(resposta){
     participantList = resposta.data;
     let caixaParticipantes = document.querySelector(".lista-participantes");
     caixaParticipantes.innerHTML = `<button class="participante ${checarParticipante("Todos", usuarioDestino)} todos" data-identifier="participant" onclick="selecionarParticipante(this)"><ion-icon name="people"></ion-icon>Todos<ion-icon name="checkmark" class="check"></ion-icon></button>`;
-    for (let i = 0; participantList.length - 1; i++){
+    for (let i = 0; i < participantList.length; i++){
         if(participantList[i].name !== usuarioAtivo){
             caixaParticipantes.innerHTML += `<button class="participante ${checarParticipante(participantList[i].name, usuarioDestino)}"  data-identifier="participant" onclick="selecionarParticipante(this)"><ion-icon name="person-circle"></ion-icon>${participantList[i].name}
             <ion-icon name="checkmark" class="check"></ion-icon></button>`;
