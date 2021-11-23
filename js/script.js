@@ -3,6 +3,12 @@ let usuarioDestino = "Todos";
 let privacidade = "message";
 let info_msg = document.querySelector(".info-mensagem");
 let participantList = [];
+
+mostrarMensagensIniciais();
+setInterval(mostrarMensagensIniciais, 3000);
+mostrarListaParticipantes();
+setInterval(mostrarListaParticipantes, 10000);
+
 function horaAtual(){
     const today = new Date();
     const hora = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -31,9 +37,6 @@ function login(){
         document.querySelector(".caixa-envio-user").value = "";
         window.location.reload();
     });
-}
-function entradaInvalida(){
-    alert("Nome inválido, por favor tente novamente");
 }
 function mostrarMensagensIniciais(){
     const listaMensagens = axios.get("https://mock-api.driven.com.br/api/v4/uol/messages");

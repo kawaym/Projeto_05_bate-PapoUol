@@ -56,12 +56,12 @@
         
     </main>
     <footer class="rodape">
-        <form class="envio-mensagem" onsubmit="return false">
+        <form class="envio-mensagem" onsubmit=" enviarMensagem(); return false">
             <div class="textinho">
                 <input class="caixa-envio" type="text" placeholder="Escreva aqui..."/>
                 <span class="info-mensagem">Enviando para Todos (Público)</span>
             </div>
-            <button class="enviar-mensagem" data-identifier="send-message" onclick="enviarMensagem()">
+            <button class="enviar-mensagem" data-identifier="send-message">
                 <ion-icon name="paper-plane-outline"></ion-icon>
             </button>
         </form>
@@ -72,12 +72,5 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="js/script.js"></script>
-    <script>
-        mostrarMensagensIniciais();
-        setInterval(mostrarMensagensIniciais, 3000);
-        //setInterval(mostrarMensagensNovas, 75);
-        mostrarListaParticipantes();
-        setInterval(mostrarListaParticipantes, 10000);
-    </script>
 </body>
 </html>
